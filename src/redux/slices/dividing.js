@@ -6,6 +6,7 @@ import { dispatch } from '../store';
 
 const initialState = {
   stages: [],
+  numbers: {},
 };
 
 const slice = createSlice({
@@ -21,6 +22,12 @@ const slice = createSlice({
     getAll(state, action) {
       state.isLoading = false;
       state.stages = action.payload;
+    },
+
+    // GET NUMBERS
+    getNumbers(state, action) {
+      state.isLoading = false;
+      state.numbers = action.payload;
     },
   },
 });
@@ -50,6 +57,19 @@ export function getById(id) {
       dispatch(slice.actions.getAll(response.data));
     } catch (error) {
       dispatch(slice.actions.getAll([]));
+    }
+  };
+}
+
+export function getNumber() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/periods/numbers');
+      console.log(response.data);
+      dispatch(slice.actions.getNumbers(response.data));
+    } catch (error) {
+      dispatch(slice.actions.getNumbers({}));
     }
   };
 }

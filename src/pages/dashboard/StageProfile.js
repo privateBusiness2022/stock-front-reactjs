@@ -29,8 +29,9 @@ import { useSnackbar } from 'notistack';
 // routes
 import ReactExport from 'react-data-export';
 import moment from 'moment';
-import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
+import { fCurrency } from '../../utils/formatNumber';
+import { PATH_DASHBOARD } from '../../routes/paths';
 import axios from '../../utils/axios';
 import useTabs from '../../hooks/useTabs';
 import useSettings from '../../hooks/useSettings';
@@ -103,6 +104,50 @@ export default function StageProfile() {
     setOpen(false);
   };
 
+  // {
+  //       columns: [
+  //           {title: "Headings", width: {wpx: 80}},//pixels width
+  //           {title: "Text Style", width: {wch: 40}},//char width
+  //           {title: "Colors", width: {wpx: 90}},
+  //       ],
+  //       data: [
+  //           [
+  //               {value: "H1", style: {font: {sz: "24", bold: true}}},
+  //               {value: "Bold", style: {font: {bold: true}}},
+  //               {value: "Red", style: {fill: {patternType: "solid", fgColor: {rgb: "FFFF0000"}}}},
+  //           ],
+  //       ]
+  //   }
+  const report = [
+    {
+      columns: [
+        { title: 'name', width: { wch: 25 } },
+        { title: 'profit', width: { wpx: 90 } },
+        { title: 'status', width: { wpx: 90 } },
+        { title: 'account', width: { wch: 25 } },
+        { title: 'phone', width: { wpx: 90 } },
+      ],
+      data: [
+        // [
+        //   { value: 'name', style: { font: { sz: '24', bold: true } } },
+        //   { value: 'profit', style: { font: { sz: '24', bold: true } } },
+        //   { value: 'status', style: { font: { sz: '24', bold: true } } },
+        //   { value: 'account', style: { font: { sz: '24', bold: true } } },
+        //   { value: 'phone', style: { font: { sz: '24', bold: true } } },
+        // ],
+      ],
+    },
+  ];
+
+  report[0].data = currentStage.clientsProfit.map((item) => [
+    { value: item.client.name },
+    { value: fCurrency(currentStage?.profit * item.stocksNumber) },
+    { value: item.stutus },
+    { value: item.client.account },
+    { value: item.client.phone },
+  ]);
+
+  console.log(report);
   const [filterName, setFilterName] = useState('');
 
   const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('ALL');
@@ -232,15 +277,7 @@ export default function StageProfile() {
                   'DD-MM-YYYY'
                 )} - ${moment(currentStage?.end).format('DD-MM-YYYY')}`}
               >
-                <ExcelSheet data={tableData} name="Sheet 1">
-                  <ExcelColumn label="Name" value="name" />
-                  <ExcelColumn label="Phone" value="phone" />
-                  {/* <ExcelColumn label="Account" value="account" />
-                  <ExcelColumn label="Status" value="status" />
-                  <ExcelColumn label="Stocks Price" value="stocksPrice" />
-                  <ExcelColumn label="Stocks" value="number" />
-                  <ExcelColumn label="Period" value="period" /> */}
-                </ExcelSheet>
+                <ExcelSheet dataSet={report} name="Sheet 1" />
               </ExcelFile>
             </>
           }

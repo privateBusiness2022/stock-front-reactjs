@@ -81,7 +81,7 @@ export default function BookingDetails({ stages, users }) {
       id: userId,
     }));
     try {
-      const response = await axios.post(`/periods/stages/${id}`, { profit: parseFloat(profit), usersIds: data });
+      const response = await axios.patch(`/periods/stages/${id}`, { profit: parseFloat(profit), usersIds: data });
       if (response.status === 201) {
         enqueueSnackbar(translate('Update-success!'));
         navigate(PATH_DASHBOARD.period.list);

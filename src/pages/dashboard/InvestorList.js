@@ -39,7 +39,7 @@ import { InvestorTableToolbar, InvestorTableRow } from '../../sections/@dashboar
 import useLocales from '../../hooks/useLocales';
 import { getAll } from '../../redux/slices/investor';
 
-export default function InvestorList() {
+export default function InvestorList({ show = true }) {
   const {
     dense,
     page,
@@ -164,24 +164,26 @@ export default function InvestorList() {
   return (
     <Page title={translate('investors-list.List')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading={translate('investors-list.List')}
-          links={[
-            { name: translate('Sidebar.dashboard'), href: PATH_DASHBOARD.root },
-            { name: translate('Sidebar.investors'), href: PATH_DASHBOARD.investor.root },
-            { name: translate('Sidebar.investors-list') },
-          ]}
-          action={
-            <Button
-              variant="contained"
-              component={RouterLink}
-              to={PATH_DASHBOARD.investor.new}
-              startIcon={<Iconify icon={'eva:plus-fill'} />}
-            >
-              {translate('investors-list.new')}
-            </Button>
-          }
-        />
+        {show ? (
+          <HeaderBreadcrumbs
+            heading={translate('investors-list.List')}
+            links={[
+              { name: translate('Sidebar.dashboard'), href: PATH_DASHBOARD.root },
+              { name: translate('Sidebar.investors'), href: PATH_DASHBOARD.investor.root },
+              { name: translate('Sidebar.investors-list') },
+            ]}
+            action={
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to={PATH_DASHBOARD.investor.new}
+                startIcon={<Iconify icon={'eva:plus-fill'} />}
+              >
+                {translate('investors-list.new')}
+              </Button>
+            }
+          />
+        ) : null}
 
         <Card>
           <Tabs

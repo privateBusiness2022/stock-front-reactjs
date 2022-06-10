@@ -39,7 +39,7 @@ import { DividingTableToolbar, DividingTableRow } from '../../sections/@dashboar
 import useLocales from '../../hooks/useLocales';
 import { getAll, getById } from '../../redux/slices/dividing';
 
-export default function DividingList() {
+export default function DividingList({ show = true }) {
   const {
     dense,
     page,
@@ -161,14 +161,16 @@ export default function DividingList() {
   return (
     <Page title={translate('dividing-list.List')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading={translate('dividing-list.List')}
-          links={[
-            { name: translate('Sidebar.dashboard'), href: PATH_DASHBOARD.root },
-            { name: translate('Sidebar.dividing'), href: PATH_DASHBOARD.period.root },
-            { name: translate('Sidebar.dividing-list') },
-          ]}
-        />
+        {show ? (
+          <HeaderBreadcrumbs
+            heading={translate('dividing-list.List')}
+            links={[
+              { name: translate('Sidebar.dashboard'), href: PATH_DASHBOARD.root },
+              { name: translate('Sidebar.dividing'), href: PATH_DASHBOARD.period.root },
+              { name: translate('Sidebar.dividing-list') },
+            ]}
+          />
+        ) : null}
 
         <Card>
           <Tabs

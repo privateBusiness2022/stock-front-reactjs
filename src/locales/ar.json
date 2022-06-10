@@ -256,5 +256,10 @@
   "Not enough stocks": "لا يوجد اسهم كافية",
   "add-stage-profit": "إضافة قيمة ربح",
   "add-stage-profit-description": "قم بإضافة قيمة ربح السهم الواحد للفترة,القمية المدخلة ستكون قيمة الربح للفترة الحالية",
-  "add-stage-users-description": "قم بختيار المستخدمين الذين سيتم تعيينهم للفترة الحالية"
+  "add-stage-users-description": "قم بختيار المستخدمين الذين سيتم تعيينهم للفترة الحالية",
+  "total-active-clients": "عدد المستثمرين النشطين",
+  "total-requests-to-change": "عدد طلبات التعديل  ",
+  "total-active-stages": "عدد الفترات النشطة",
+  "total-request-to-withdrawal": "عدد طلبات السحب",
+  "total-active-users": "عدد المستخدمين النشطين"
 }
