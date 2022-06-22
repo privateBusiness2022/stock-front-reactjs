@@ -38,7 +38,7 @@ export default function ProjectTableRow({
   const { translate } = useLocales();
   moment.locale('ar-ly');
 
-  const { name, status, periods, date } = row;
+  const { name, status, projectFund, date } = row;
   const id = window.localStorage.getItem('id');
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -69,7 +69,7 @@ export default function ProjectTableRow({
           {translate(status)}
         </Label>
       </TableCell>
-      <TableCell align="left">{periods.map((period) => `- ${period.name} `)}-</TableCell>
+      <TableCell align="left">{projectFund.map((fund) => `- ${fund.period.name} `)}-</TableCell>
 
       <TableCell align="left">{moment(date).format('DD MMM YYYY')}</TableCell>
 

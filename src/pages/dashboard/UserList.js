@@ -65,13 +65,22 @@ export default function UserList() {
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-
-  const { enqueueSnackbar } = useSnackbar();
-
   const { users } = useSelector((state) => state.users);
 
   const [tableData, setTableData] = useState(users);
+
+  useEffect(() => {
+    dispatch(getAll());
+    setTableData(users);
+  }, []);
+
+  useEffect(() => {
+    setTableData(users);
+  }, [users]);
+
+  const navigate = useNavigate();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [filterName, setFilterName] = useState('');
 
@@ -99,10 +108,6 @@ export default function UserList() {
   ];
 
   // ----------------------------------------------------------------------
-
-  useEffect(() => {
-    dispatch(getAll());
-  }, [dispatch]);
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
@@ -155,13 +160,23 @@ export default function UserList() {
     }
   };
 
-  const dataFiltered = applySortFilter({
+  let dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
     filterRole,
     filterStatus,
   });
+
+  if (dataFiltered.length === 0) {
+    dataFiltered = applySortFilter({
+      tableData,
+      comparator: getComparator(order, orderBy),
+      filterName,
+      filterRole,
+      filterStatus,
+    });
+  }
 
   const denseHeight = dense ? 52 : 72;
 
@@ -255,23 +270,25 @@ export default function UserList() {
                   }
                 />
 
-                <TableBody>
-                  {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <UserTableRow
-                      key={row.id}
-                      row={row}
-                      selected={selected.includes(row.id)}
-                      onSelectRow={() => onSelectRow(row.id)}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
-                      onEditRow={() => handleEditRow(row.id)}
-                      onActiveRow={() => handelActiveRow(row.id)}
-                    />
-                  ))}
+                {users ? (
+                  <TableBody>
+                    {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                      <UserTableRow
+                        key={row.id}
+                        row={row}
+                        selected={selected.includes(row.id)}
+                        onSelectRow={() => onSelectRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        onEditRow={() => handleEditRow(row.id)}
+                        onActiveRow={() => handelActiveRow(row.id)}
+                      />
+                    ))}
 
-                  <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />
+                    <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />
 
-                  <TableNoData isNotFound={isNotFound} />
-                </TableBody>
+                    <TableNoData isNotFound={isNotFound} />
+                  </TableBody>
+                ) : null}
               </Table>
             </TableContainer>
           </Scrollbar>

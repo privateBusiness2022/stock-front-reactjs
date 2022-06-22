@@ -100,6 +100,9 @@ export default function RequestToChangeList() {
     dispatch(getRequestsToChange());
   }, [dispatch]);
 
+  useEffect(() => {
+    setTableData(requests.requestsToChange);
+  }, [requests.requestsToChange]);
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);

@@ -106,6 +106,10 @@ export default function RequestToWithdrawalList() {
     dispatch(getRequestsToWithdrawal());
   }, [dispatch]);
 
+  useEffect(() => {
+    setTableData(requests.requestsToWithdrawal);
+  }, [requests.requestsToWithdrawal]);
+
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);

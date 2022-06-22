@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
-// import MainLayout from '../layouts/main';
 import moment from 'moment';
+import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
@@ -100,8 +100,8 @@ export default function Router() {
           children: [
             { element: <Navigate to="/dashboard/project/list" replace />, index: true },
             { path: 'list', element: <ProjectList /> },
-            // { path: 'new', element: <ProjectCreate /> },
-            // { path: 'edit', element: <ProjectCreate /> },
+            { path: 'new', element: <ProjectCreate /> },
+            { path: 'profile', element: <ProjectProfile /> },
           ],
         },
         {
@@ -202,16 +202,20 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" replace /> },
       ],
     },
-    // {
-    //   path: '/',
-    //   element: <MainLayout />,
-    //   children: [
-    //     { element: <HomePage />, index: true },
-    //     { path: 'about-us', element: <About /> },
-    //     { path: 'contact-us', element: <Contact /> },
-    //     { path: 'faqs', element: <Faqs /> },
-    //   ],
-    // },
+    {
+      path: '/',
+      element: (
+        <GuestGuard>
+          <Login />
+        </GuestGuard>
+      ),
+      // children: [
+      //   { element: <HomePage />, index: true },
+      //   { path: 'about-us', element: <About /> },
+      //   { path: 'contact-us', element: <Contact /> },
+      //   { path: 'faqs', element: <Faqs /> },
+      // ],
+    },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
@@ -257,9 +261,10 @@ const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
 
 const ProjectList = Loadable(lazy(() => import('../pages/dashboard/ProjectList')));
-// const ProjectDetails = Loadable(lazy(() => import('../pages/dashboard/ProjectDetails')));
-// const ProjectCreate = Loadable(lazy(() => import('../pages/dashboard/ProjectCreate')));
+const ProjectProfile = Loadable(lazy(() => import('../pages/dashboard/ProjectProfile')));
+const ProjectCreate = Loadable(lazy(() => import('../pages/dashboard/ProjectCreate')));
 // const ProjectEdit = Loadable(lazy(() => import('../pages/dashboard/ProjectEdit')));
+
 // Request
 const RequestToChangeList = Loadable(lazy(() => import('../pages/dashboard/RequestToChangeList')));
 const RequestToWithdrawalList = Loadable(lazy(() => import('../pages/dashboard/RequestToWithdrawalList')));
@@ -286,7 +291,7 @@ const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
 const Calendar = Loadable(lazy(() => import('../pages/dashboard/Calendar')));
 const Kanban = Loadable(lazy(() => import('../pages/dashboard/Kanban')));
 
-// MAIN
+// MAIN;
 // const HomePage = Loadable(lazy(() => import('../pages/Home')));
 // const About = Loadable(lazy(() => import('../pages/About')));
 // const Contact = Loadable(lazy(() => import('../pages/Contact')));

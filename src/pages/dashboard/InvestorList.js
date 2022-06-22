@@ -102,6 +102,10 @@ export default function InvestorList({ show = true }) {
     dispatch(getAll());
   }, [dispatch]);
 
+  useEffect(() => {
+    setTableData(investors);
+  }, [investors]);
+
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);

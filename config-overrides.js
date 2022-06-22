@@ -9,6 +9,7 @@ module.exports = function override(config) {
     buffer: require.resolve('buffer'),
     asset: require.resolve('assert'),
     fs: false,
+    crypto: require.resolve('crypto-browserify'),
   };
 
   config.plugins.push(

@@ -147,6 +147,10 @@ export default function DividingList({ show = true }) {
     dispatch(getById(window.localStorage.getItem('id')));
   }, []);
 
+  useEffect(() => {
+    setTableData(stages);
+  }, [stages]);
+
   const dataFiltered = applySortFilter({
     tableData,
     comparator: getComparator(order, orderBy),

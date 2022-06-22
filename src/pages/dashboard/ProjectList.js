@@ -129,6 +129,10 @@ export default function ProjectList() {
     dispatch(getAllPeriods());
   }, [dispatch]);
 
+  useEffect(() => {
+    setTableData(projects);
+  }, [projects]);
+
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);
@@ -229,9 +233,9 @@ export default function ProjectList() {
           action={
             <Button
               variant="contained"
-              // component={RouterLink}
-              // to={PATH_DASHBOARD.project.new}
-              onClick={handleClickOpen}
+              component={RouterLink}
+              to={PATH_DASHBOARD.project.new}
+              // onClick={navigate(PATH_DASHBOARD.project.new)}
               startIcon={<Iconify icon={'eva:plus-fill'} />}
             >
               {translate('project-list.new-project')}
@@ -339,14 +343,14 @@ export default function ProjectList() {
           </Box>
         </Card>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>{translate('add-stage-profit')}</DialogTitle>
+          <DialogTitle>{translate('add-project')}</DialogTitle>
           <DialogContent>
-            <DialogContentText>{translate('add-stage-profit-description')}</DialogContentText>
+            <DialogContentText>{translate('add-project-description')}</DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label={translate('periods-list.profit')}
+              label={translate('periods-list.project')}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -354,7 +358,7 @@ export default function ProjectList() {
               variant="standard"
             />
 
-            <DialogContentText paddingTop={4}>{translate('add-stage-users-description')}</DialogContentText>
+            <DialogContentText paddingTop={4}>{translate('add-project-fund-description')}</DialogContentText>
 
             <FormGroup>
               {periods?.map((period) => (

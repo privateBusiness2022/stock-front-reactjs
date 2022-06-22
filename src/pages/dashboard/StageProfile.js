@@ -104,6 +104,10 @@ export default function StageProfile() {
     setOpen(false);
   };
 
+  if (tableData === undefined) {
+    window.location.replace(PATH_DASHBOARD.dividing.list);
+  }
+
   // {
   //       columns: [
   //           {title: "Headings", width: {wpx: 80}},//pixels width
@@ -147,7 +151,6 @@ export default function StageProfile() {
     { value: item.client.phone },
   ]);
 
-  console.log(report);
   const [filterName, setFilterName] = useState('');
 
   const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('ALL');

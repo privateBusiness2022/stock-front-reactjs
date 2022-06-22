@@ -4,6 +4,7 @@ import { PATH_DASHBOARD } from './routes/paths';
 // API
 // ----------------------------------------------------------------------
 
+// export const HOST_API = process.env.REACT_APP_HOST_API_KEY || 'http://api.dashb-dds.com/';
 export const HOST_API = process.env.REACT_APP_HOST_API_KEY || 'http://localhost:8081/';
 
 export const FIREBASE_API = {

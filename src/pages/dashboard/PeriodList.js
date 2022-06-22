@@ -102,6 +102,10 @@ export default function PeriodList() {
     dispatch(getAll());
   }, [dispatch]);
 
+  useEffect(() => {
+    setTableData(periods);
+  }, [periods]);
+
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
     setPage(0);

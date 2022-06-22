@@ -64,8 +64,9 @@ export const PATH_DASHBOARD = {
   },
   project: {
     // root: path(ROOTS_DASHBOARD, '/project'),
-    // new: path(ROOTS_DASHBOARD, '/project/new'),
+    new: path(ROOTS_DASHBOARD, '/project/new'),
     list: path(ROOTS_DASHBOARD, '/project/list'),
+    profile: (id) => path(ROOTS_DASHBOARD, `/project/profile?id=${id}`),
   },
   request: {
     toChangeList: path(ROOTS_DASHBOARD, '/request/to-change-list'),

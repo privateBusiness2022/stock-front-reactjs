@@ -63,7 +63,7 @@ const navConfig = [
         icon: ICONS.banking,
         children: [
           { title: 'projects-list', path: PATH_DASHBOARD.project.list },
-          // { title: 'projects-create', path: PATH_DASHBOARD.project.new },
+          { title: 'projects-create', path: PATH_DASHBOARD.project.new },
           // { title: 'edit', path: PATH_DASHBOARD.project.demoEdit },
         ],
       },
