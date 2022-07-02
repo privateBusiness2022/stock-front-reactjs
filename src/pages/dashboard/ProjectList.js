@@ -302,18 +302,20 @@ export default function ProjectList() {
 
                 <TableBody>
                   {projects.length !== 0
-                    ? dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                        <ProjectTableRow
-                          key={row.id}
-                          row={row}
-                          selected={selected.includes(row.id)}
-                          onSelectRow={() => onSelectRow(row.id)}
-                          onDeleteRow={() => handleDeleteRow(row.id)}
-                          onEditRow={() => handleEditRow(row.id)}
-                          onActiveRow={() => handelActiveRow(row.id)}
-                          // onClickRow={() => navigate(PATH_DASHBOARD.period.profile(paramCase(`${row.id}`)))}
-                        />
-                      ))
+                    ? dataFiltered
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row) => (
+                          <ProjectTableRow
+                            key={row.id}
+                            row={row}
+                            selected={selected.includes(row.id)}
+                            onSelectRow={() => onSelectRow(row.id)}
+                            onDeleteRow={() => handleDeleteRow(row.id)}
+                            onEditRow={() => handleEditRow(row.id)}
+                            onActiveRow={() => handelActiveRow(row.id)}
+                            onClickRow={() => navigate(PATH_DASHBOARD.project.profile(paramCase(`${row.id}`)))}
+                          />
+                        ))
                     : null}
 
                   <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />

@@ -16,6 +16,7 @@ import {
   BookingCheckInWidgets,
   BookingCustomerReviews,
   BookingReservationStats,
+  FundingPeriods,
 } from '../../sections/@dashboard/general/booking';
 // Hooks
 import { useDispatch, useSelector } from '../../redux/store';
@@ -38,42 +39,33 @@ export default function ProjectProfile() {
 
   const id = parseInt(queryParams.get('id'), 10);
 
-  const { periods } = useSelector((state) => state.periods);
+  const { projects } = useSelector((state) => state.projects);
 
   const { users } = useSelector((state) => state.users);
 
-  const currentPeriod = periods.find((period) => period.id === id);
+  const currentProject = projects.find((project) => project.id === id);
 
   useEffect(() => {
     dispatch(getAll());
   }, [dispatch]);
 
   return (
-    <Page title={currentPeriod?.name}>
+    <Page title={currentProject?.name}>
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <BookingWidgetSummary
-              title={translate('Total-Investors')}
-              total={currentPeriod?.clients.length}
+              title={translate('Total-Funds')}
+              total={currentProject?.projectFund.reduce(
+                (a, b) => a + b?.stocks * Number(b?.period?.stocks?.priceOfOne),
+                0
+              )}
               icon={<BookingIllustration />}
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <BookingWidgetSummary
-              title={translate('Available-Stocks')}
-              total={currentPeriod?.stocks.number}
-              icon={<DocIllustration />}
-            />
-          </Grid>
-
-          {/* <Grid item xs={12}>
-            <BookingNewestBooking />
-          </Grid> */}
-
           <Grid item xs={12}>
-            <BookingDetails stages={currentPeriod?.stages} users={users} />
+            <FundingPeriods periods={currentProject?.projectFund} />
           </Grid>
         </Grid>
       </Container>

@@ -76,6 +76,7 @@ export default function UserNewEditForm({ isEdit }) {
     { value: 'ADMIN', label: 'ADMIN' },
     { value: 'ACCOUNTER', label: 'ACCOUNTER' },
     { value: 'AGENT', label: 'AGENT' },
+    { value: 'OTHER', label: 'OTHER' },
   ];
 
   const methods = useForm({

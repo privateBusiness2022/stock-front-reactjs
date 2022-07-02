@@ -7,6 +7,7 @@ import { dispatch } from '../store';
 const initialState = {
   stages: [],
   numbers: {},
+  coUsers: [],
 };
 
 const slice = createSlice({
@@ -28,6 +29,12 @@ const slice = createSlice({
     getNumbers(state, action) {
       state.isLoading = false;
       state.numbers = action.payload;
+    },
+
+    // GET USERS
+    getUsers(state, action) {
+      state.isLoading = false;
+      state.coUsers = action.payload;
     },
   },
 });
@@ -74,4 +81,15 @@ export function getNumber() {
   };
 }
 
+export function getUsers(id) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(`/periods/${id}/usersBeneficiary`);
+      dispatch(slice.actions.getUsers(response.data));
+    } catch (error) {
+      dispatch(slice.actions.getUsers([]));
+    }
+  };
+}
 // ----------------------------------------------------------------------

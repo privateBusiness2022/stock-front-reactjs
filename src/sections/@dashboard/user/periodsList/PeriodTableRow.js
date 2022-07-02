@@ -4,7 +4,7 @@ import { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/ar-ly'; // without this line it didn't work
 import { paramCase } from 'change-case';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 
 import { useTheme } from '@mui/material/styles';
 import { Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
@@ -25,18 +25,12 @@ PeriodTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
 };
 
-export default function PeriodTableRow({
-  row,
-  selected,
-  onEditRow,
-  onSelectRow,
-  onDeleteRow,
-  onActiveRow,
-  onClickRow,
-}) {
+export default function PeriodTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow, onActiveRow }) {
   const theme = useTheme();
   const { translate } = useLocales();
   moment.locale('ar-ly');
+
+  const navigate = useNavigate();
 
   const { name, status, stocks, clients, ceratedBy } = row;
   const id = window.localStorage.getItem('id');
@@ -51,7 +45,7 @@ export default function PeriodTableRow({
   };
 
   return (
-    <TableRow hover selected={selected} onClick={onClickRow}>
+    <TableRow hover selected={selected}>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="subtitle2" noWrap>
           {name}
@@ -90,6 +84,15 @@ export default function PeriodTableRow({
               >
                 <Iconify icon={'eva:trash-2-outline'} />
                 {translate('Delete')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(PATH_DASHBOARD.period.profile(paramCase(`${row.id}`)));
+                }}
+                sx={{ color: 'purple.main' }}
+              >
+                <Iconify icon={'eva:briefcase-outline'} />
+                {translate('Profile')}
               </MenuItem>
             </>
           }

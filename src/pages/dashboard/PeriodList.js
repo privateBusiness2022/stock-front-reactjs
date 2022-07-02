@@ -254,7 +254,7 @@ export default function PeriodList() {
                       onDeleteRow={() => handleDeleteRow(row.id)}
                       onEditRow={() => handleEditRow(row.id)}
                       onActiveRow={() => handelActiveRow(row.id)}
-                      onClickRow={() => navigate(PATH_DASHBOARD.period.profile(paramCase(`${row.id}`)))}
+                      // onClickRow={() => navigate(PATH_DASHBOARD.period.profile(paramCase(`${row.id}`)))}
                     />
                   ))}
 

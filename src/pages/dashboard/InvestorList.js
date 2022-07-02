@@ -74,6 +74,8 @@ export default function InvestorList({ show = true }) {
   const [tableData, setTableData] = useState(investors);
 
   const [filterName, setFilterName] = useState('');
+  const [filterPhone, setFilterPhone] = useState('');
+  const [filterAccount, setFilterAccount] = useState('');
 
   const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('ALL');
 
@@ -108,6 +110,16 @@ export default function InvestorList({ show = true }) {
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
+    setPage(0);
+  };
+
+  const handleFilterPhone = (filterPhone) => {
+    setFilterPhone(filterPhone);
+    setPage(0);
+  };
+
+  const handleFilterAccount = (filterAccount) => {
+    setFilterAccount(filterAccount);
     setPage(0);
   };
 
@@ -158,6 +170,8 @@ export default function InvestorList({ show = true }) {
     tableData,
     comparator: getComparator(order, orderBy),
     filterName,
+    filterPhone,
+    filterAccount,
     filterStatus,
   });
 
@@ -205,7 +219,14 @@ export default function InvestorList({ show = true }) {
 
           <Divider />
 
-          <InvestorTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <InvestorTableToolbar
+            filterName={filterName}
+            filterPhone={filterPhone}
+            filterAccount={filterAccount}
+            onFilterName={handleFilterName}
+            onFilterPhone={handleFilterPhone}
+            onFilterAccount={handleFilterAccount}
+          />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
@@ -293,7 +314,7 @@ export default function InvestorList({ show = true }) {
 
 // ----------------------------------------------------------------------
 
-function applySortFilter({ tableData, comparator, filterName, filterStatus, filterRole }) {
+function applySortFilter({ tableData, comparator, filterName, filterPhone, filterAccount, filterStatus, filterRole }) {
   const stabilizedThis = tableData.map((el, index) => [el, index]);
 
   stabilizedThis.sort((a, b) => {
@@ -306,6 +327,14 @@ function applySortFilter({ tableData, comparator, filterName, filterStatus, filt
 
   if (filterName) {
     tableData = tableData.filter((item) => item.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
+  }
+
+  if (filterPhone) {
+    tableData = tableData.filter((item) => item.phone.toLowerCase().indexOf(filterPhone.toLowerCase()) !== -1);
+  }
+
+  if (filterAccount) {
+    tableData = tableData.filter((item) => item.account.toLowerCase().indexOf(filterAccount.toLowerCase()) !== -1);
   }
 
   if (filterStatus !== 'ALL') {
