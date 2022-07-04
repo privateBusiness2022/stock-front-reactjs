@@ -106,7 +106,7 @@ const navConfig = [
         icon: ICONS.analytics,
         children: [
           { title: 'dividing-list', path: PATH_DASHBOARD.dividing.list },
-          // { title: 'dividing-create', path: PATH_DASHBOARD. },
+          { title: 'commissions-list', path: PATH_DASHBOARD.dividing.commissions },
           // { title: 'edit', path: PATH_DASHBOARD.dividing.demoEdit },
         ],
       },

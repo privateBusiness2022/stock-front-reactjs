@@ -8,6 +8,7 @@ const initialState = {
   stages: [],
   numbers: {},
   coUsers: [],
+  commissions: [],
 };
 
 const slice = createSlice({
@@ -35,6 +36,11 @@ const slice = createSlice({
     getUsers(state, action) {
       state.isLoading = false;
       state.coUsers = action.payload;
+    },
+
+    getCommissions(state, action) {
+      state.isLoading = false;
+      state.commissions = action.payload;
     },
   },
 });
@@ -64,6 +70,18 @@ export function getById(id) {
       dispatch(slice.actions.getAll(response.data));
     } catch (error) {
       dispatch(slice.actions.getAll([]));
+    }
+  };
+}
+
+export function getCommissions(id) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(`/periods/${id}/commissions`);
+      dispatch(slice.actions.getCommissions(response.data));
+    } catch (error) {
+      dispatch(slice.actions.getCommissions([]));
     }
   };
 }

@@ -88,9 +88,9 @@ export const PATH_DASHBOARD = {
   },
   dividing: {
     // root: path(ROOTS_DASHBOARD, '/dividing'),
-    // new: path(ROOTS_DASHBOARD, '/dividing/new'),
     list: path(ROOTS_DASHBOARD, '/dividing/list'),
-    // edit: (id) => path(ROOTS_DASHBOARD, `/dividing/edit?id=${id}`),
+    commissions: path(ROOTS_DASHBOARD, '/dividing/commissions'),
+    profile: (id) => path(ROOTS_DASHBOARD, `/dividing/commissions-profile?id=${id}`),
     account: (id) => path(ROOTS_DASHBOARD, `/dividing/profile?id=${id}`),
   },
   eCommerce: {

@@ -54,7 +54,9 @@
     "dividing-list": "توزيع الارباح",
     "projects": "المشاريع",
     "projects-list": "قائمة المشاريع",
-    "projects-create": "إنشاء مشروع"
+    "projects-create": "إنشاء مشروع",
+    "commissions-list": "قائمة العمولات",
+    "commission-holder-list": "قائمة اصاحب العمولات"
   },
   "user-list": {
     "New-User": "اضافة مستخدم",
@@ -148,7 +150,8 @@
     "stocks": "عدد الاسهم",
     "status": "الحالة",
     "period": "الدورة",
-    "stocks-Price": "سعر الاسهم"
+    "stocks-Price": "سعر الاسهم",
+    "commission": "العمولة"
   },
   "dividing-list": {
     "dashboard": "لوحة التحكم",
@@ -164,7 +167,10 @@
     "period": "الدورة",
     "stocks": "عدد الاسهم",
     "status": "الحالة",
-    "stocks-Price": "سعر الاسهم"
+    "stocks-Price": "سعر الاسهم",
+    "commissions-list":"قائمة العمولات",
+    "commission-holder": "اصاحب العمولات",
+    "all-commissions": "كل اصاحب العمولات"
   },
   "change-password": {
     "Old-Password-is-required": "كلمة المرور القديمة مطلوبة",

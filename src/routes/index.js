@@ -141,7 +141,8 @@ export default function Router() {
           children: [
             { element: <Navigate to="/dashboard/dividing/list" replace />, index: true },
             { path: 'profile', element: <StageProfile /> },
-            // { path: 'cards', element: <UserCards /> },
+            { path: 'commissions', element: <CommissionList /> },
+            { path: 'commissions-profile', element: <StageCommissionProfile /> },
             { path: 'list', element: <DividingList /> },
             // { path: 'account', element: <DividingAccount /> },
           ],
@@ -285,6 +286,8 @@ const InvestorAccount = Loadable(lazy(() => import('../pages/dashboard/InvestorA
 // DIVIDING
 const DividingList = Loadable(lazy(() => import('../pages/dashboard/DividingList')));
 const StageProfile = Loadable(lazy(() => import('../pages/dashboard/StageProfile')));
+const CommissionList = Loadable(lazy(() => import('../pages/dashboard/CommissionList')));
+const StageCommissionProfile = Loadable(lazy(() => import('../pages/dashboard/StageCommissionProfile')));
 // APP
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
