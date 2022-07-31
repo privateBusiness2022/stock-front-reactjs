@@ -56,10 +56,7 @@ export default function ProjectProfile() {
           <Grid item xs={12} md={4}>
             <BookingWidgetSummary
               title={translate('Total-Funds')}
-              total={currentProject?.projectFund.reduce(
-                (a, b) => a + b?.stocks * Number(b?.period?.stocks?.priceOfOne),
-                0
-              )}
+              total={currentProject?.projectFund.reduce((a, b) => a + b?.fund, 0)}
               icon={<BookingIllustration />}
             />
           </Grid>

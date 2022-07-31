@@ -110,7 +110,7 @@ export default function ProjectNewEditForm({ isEdit }) {
       periods.forEach((period) => {
         periodsFund.push({
           periodId: period.id,
-          stocks: data[`periodFund${period.id}`],
+          fund: data[`periodFund${period.id}`],
         });
         delete data[`periodFund${period.id}`];
       });
@@ -136,7 +136,7 @@ export default function ProjectNewEditForm({ isEdit }) {
   }, [dispatch]);
 
   function handleAgentChange(e, id) {
-    periodsFund.push({ periodId: id, stocks: e.target.value });
+    periodsFund.push({ periodId: id, fund: e.target.value });
   }
 
   function createYupSchema(schema, config) {

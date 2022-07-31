@@ -5,6 +5,7 @@ import { Stack, Typography, Box, CircularProgress } from '@mui/material';
 import { fShortenNumber, fCurrency } from '../../../utils/formatNumber';
 // components
 import Iconify from '../../../components/Iconify';
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,8 @@ InvoiceAnalytic.propTypes = {
 };
 
 export default function InvoiceAnalytic({ title, total, icon, color, percent, price }) {
+  const { translate } = useLocales();
+
   return (
     <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: 1, minWidth: 200 }}>
       <Stack alignItems="center" justifyContent="center" sx={{ position: 'relative' }}>
@@ -38,9 +41,9 @@ export default function InvoiceAnalytic({ title, total, icon, color, percent, pr
         <Typography variant="h6">{title}</Typography>
 
         <Typography variant="subtitle2">
-          {fShortenNumber(total)}{' '}
+          {total}{' '}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            invoice
+            {translate('investors-list.investor')}
           </Box>
         </Typography>
 

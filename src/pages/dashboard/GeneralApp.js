@@ -43,7 +43,6 @@ export default function GeneralApp() {
   useEffect(() => {
     dispatch(getNumber());
   }, []);
-  console.log(numbers);
 
   return (
     <Page title="General: App">

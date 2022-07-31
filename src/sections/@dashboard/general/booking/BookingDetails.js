@@ -61,33 +61,20 @@ export default function BookingDetails({ stages, users }) {
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
   const { coUsers } = useSelector((state) => state.stages);
 
   const [usersIds, setUsersIds] = useState([]);
 
-  const [coUsersIds, setCoUsersIds] = useState([]);
-
   const [open, setOpen] = useState(false);
 
-  const [openCommission, setOpenCommission] = useState(false);
+  const [commission, setCommission] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleOpenCommission = (id) => {
-    dispatch(getUsers(id));
-    setOpenCommission(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleCloseCommission = () => {
-    setOpenCommission(false);
   };
 
   const { translate } = useLocales();
@@ -100,31 +87,27 @@ export default function BookingDetails({ stages, users }) {
     const data = usersIds.map((userId) => ({
       id: userId,
     }));
-    try {
-      const response = await axios.patch(`/periods/stages/${id}`, { profit: parseFloat(profit), usersIds: data });
-      if (response.status === 201) {
-        enqueueSnackbar(translate('Update-success!'));
-        navigate(PATH_DASHBOARD.period.list);
-      } else {
-        enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
-      }
-    } catch (error) {
-      enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
-    }
-  };
 
-  const handleAddCommission = async (id) => {
-    try {
-      const response = await axios.post(`/periods/${id}/commissions`, { commissions: coUsersIds });
-      if (response.status === 201) {
-        enqueueSnackbar(translate('Update-success!'));
-        navigate(PATH_DASHBOARD.period.list);
-      } else {
-        enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
-      }
-    } catch (error) {
-      enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
-    }
+    console.log({
+      profit: parseFloat(profit),
+      usersIds: data,
+      commission: parseFloat(commission),
+    });
+    // try {
+    //   const response = await axios.patch(`/periods/stages/${id}`, {
+    //     profit: parseFloat(profit),
+    //     usersIds: data,
+    //     commission: parseFloat(commission),
+    //   });
+    //   if (response.status === 201) {
+    //     enqueueSnackbar(translate('Update-success!'));
+    //     navigate(PATH_DASHBOARD.period.list);
+    //   } else {
+    //     enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
+    //   }
+    // } catch (error) {
+    //   enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
+    // }
   };
 
   function handelCheckboxChange(id) {
@@ -133,16 +116,6 @@ export default function BookingDetails({ stages, users }) {
       setUsersIds([...usersIds, id]);
     } else {
       setUsersIds(usersIds.filter((item) => item !== id));
-    }
-  }
-
-  function handleCommissionFelidChange(event, id) {
-    // find id in object in coUsersIds
-    const index = coUsersIds.findIndex((item) => item.id === id);
-    if (index === -1) {
-      setCoUsersIds([...coUsersIds, { id, amount: event.target.value }]);
-    } else {
-      setCoUsersIds(coUsersIds.map((item) => (item.id === id ? { id, amount: event.target.value } : item)));
     }
   }
 
@@ -204,11 +177,6 @@ export default function BookingDetails({ stages, users }) {
                           {translate('ADD-PROFIT')}
                         </Button>
                       ) : null}
-                      {row?.commissions?.length === 0 && row?.profit !== 0 ? (
-                        <Button variant="contained" color="secondary" onClick={() => handleOpenCommission(row.id)}>
-                          {translate('ADD-COMMISSION')}
-                        </Button>
-                      ) : null}
                       <Dialog open={open} onClose={handleClose}>
                         <DialogTitle>{translate('add-stage-profit')}</DialogTitle>
                         <DialogContent>
@@ -221,6 +189,21 @@ export default function BookingDetails({ stages, users }) {
                             type="number"
                             value={profit}
                             onChange={(e) => setProfit(e.target.value)}
+                            fullWidth
+                            variant="standard"
+                            InputProps={{
+                              startAdornment: <InputAdornment position="start">%</InputAdornment>,
+                            }}
+                          />
+                          <DialogContentText>{translate('add-stage-commission-description')}</DialogContentText>
+                          <TextField
+                            autoFocus
+                            margin="dense"
+                            id="commission"
+                            label={translate('periods-list.commission')}
+                            type="number"
+                            value={commission}
+                            onChange={(e) => setCommission(e.target.value)}
                             fullWidth
                             variant="standard"
                             InputProps={{
@@ -249,46 +232,6 @@ export default function BookingDetails({ stages, users }) {
                           <Button
                             onClick={() => {
                               handelProfitUpdate(row?.id);
-                            }}
-                          >
-                            {translate('Save-Changes')}
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-
-                      <Dialog open={openCommission} onClose={handleCloseCommission}>
-                        <DialogTitle>{translate('add-stage-commission')}</DialogTitle>
-                        <DialogContent>
-                          <DialogContentText>{translate('add-stage-commission-description')}</DialogContentText>
-
-                          <FormGroup>
-                            <Box
-                              sx={{
-                                display: 'grid',
-                                columnGap: 2,
-                                rowGap: 3,
-                                marginTop: 4,
-                                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-                              }}
-                            >
-                              {coUsers?.map((user) => (
-                                <TextField
-                                  key={user.id}
-                                  name={`periodFund${user.id}`}
-                                  type="number"
-                                  onChange={(e) => handleCommissionFelidChange(e, user?.id)}
-                                  label={`${translate('stage-commission')}  ${user.name}`}
-                                  required
-                                />
-                              ))}
-                            </Box>
-                          </FormGroup>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={handleCloseCommission}>{translate('Cancel')}</Button>
-                          <Button
-                            onClick={() => {
-                              handleAddCommission(row?.id);
                             }}
                           >
                             {translate('Save-Changes')}

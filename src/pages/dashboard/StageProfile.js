@@ -24,12 +24,15 @@ import {
   DialogContentText,
   DialogActions,
   Grid,
+  Stack,
+  useTheme,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 // routes
 import ReactExport from 'react-data-export';
 import moment from 'moment';
 // hooks
+import { sumBy } from 'lodash';
 import { fCurrency } from '../../utils/formatNumber';
 import { PATH_DASHBOARD } from '../../routes/paths';
 import axios from '../../utils/axios';
@@ -48,13 +51,16 @@ import { InvestorTableToolbar, InvestorTableRow } from '../../sections/@dashboar
 import useLocales from '../../hooks/useLocales';
 import { getById, getAll } from '../../redux/slices/dividing';
 import { BookingCustomerReviews } from '../../sections/@dashboard/general/booking';
+import InvoiceAnalytic from '../../sections/@dashboard/invoice/InvoiceAnalytic';
 // print excl
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const { ExcelFile } = ReactExport;
+const { ExcelSheet } = ReactExport.ExcelFile;
+const { ExcelColumn } = ReactExport.ExcelFile;
 
 export default function StageProfile() {
+  const theme = useTheme();
+
   const {
     dense,
     page,
@@ -143,18 +149,19 @@ export default function StageProfile() {
     },
   ];
 
-  report[0].data = currentStage.clientsProfit.map((item) => [
-    { value: item.client.name },
-    { value: fCurrency(currentStage?.profit * item.stocksNumber) },
-    { value: item.stutus },
-    { value: item.client.account },
-    { value: item.client.phone },
-  ]);
-
   const [filterName, setFilterName] = useState('');
 
   const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('ALL');
 
+  const getLengthByStatus = (status) => currentStage.clientsProfit.filter((item) => item.status === status).length;
+
+  const getTotalPriceByStatus = (status) =>
+    sumBy(
+      currentStage.clientsProfit.filter((item) => item.status === status),
+      'profit'
+    );
+
+  const getPercentByStatus = (status) => (getLengthByStatus(status) / currentStage.clientsProfit.length) * 100;
   // ----------------------------------------------------------------------
 
   const STATUS_OPTIONS = [
@@ -174,11 +181,27 @@ export default function StageProfile() {
     { id: '' },
   ];
 
+  const TABS = [
+    { value: 'all', label: 'All', color: 'info', count: currentStage.clientsProfit.length },
+    { value: 'paid', label: 'Paid', color: 'success', count: getLengthByStatus('APPROVED') },
+    { value: 'unpaid', label: 'Unpaid', color: 'warning', count: getLengthByStatus('PENDING') },
+  ];
+
   // ----------------------------------------------------------------------
 
   useEffect(() => {
     dispatch(getById(localStorage.getItem('id'), id));
   }, [dispatch]);
+
+  const generateExcel = () => {
+    report[0].data = currentStage.clientsProfit.map((item) => [
+      { value: item.client.name },
+      { value: fCurrency(currentStage?.profit * item.stocksNumber) },
+      { value: item.stutus },
+      { value: item.client.account },
+      { value: item.client.phone },
+    ]);
+  };
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
@@ -270,7 +293,7 @@ export default function StageProfile() {
                     // component={RouterLink}
                     // to={PATH_DASHBOARD.investor.new}
                     startIcon={<Iconify icon={'eva:file-text-outline'} />}
-                    // onClick={handlePrintReport}
+                    onClick={generateExcel}
                     style={{ marginRight: '1rem' }}
                   >
                     {translate('periods-list.print-report')}
@@ -285,6 +308,41 @@ export default function StageProfile() {
             </>
           }
         />
+
+        <Card sx={{ mb: 5 }}>
+          <Scrollbar>
+            <Stack
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem sx={{ borderStyle: 'dashed' }} />}
+              sx={{ py: 2 }}
+            >
+              <InvoiceAnalytic
+                title={translate('investors-list.Total')}
+                total={currentStage.clientsProfit.length}
+                percent={100}
+                price={(tableData, 'totalPrice')}
+                icon="ic:baseline-supervised-user-circle"
+                color={theme.palette.info.main}
+              />
+              <InvoiceAnalytic
+                title={translate('investors-list.Approved')}
+                total={getLengthByStatus('APPROVED')}
+                percent={getPercentByStatus('APPROVED')}
+                price={getTotalPriceByStatus('APPROVED')}
+                icon="eva:checkmark-circle-2-fill"
+                color={theme.palette.success.main}
+              />
+              <InvoiceAnalytic
+                title={translate('investors-list.Pending')}
+                total={getLengthByStatus('PENDING')}
+                percent={getPercentByStatus('PENDING')}
+                price={getTotalPriceByStatus('PENDING')}
+                icon="eva:clock-fill"
+                color={theme.palette.warning.main}
+              />
+            </Stack>
+          </Scrollbar>
+        </Card>
 
         <Card>
           <Tabs

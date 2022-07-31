@@ -73,7 +73,7 @@ export default function BookingDetails({ periods }) {
                   <TableCell sx={{ minWidth: 160 }}>{translate('periods-list.name')}</TableCell>
                   <TableCell sx={{ minWidth: 160 }}>{translate('periods-list.status')}</TableCell>
                   <TableCell sx={{ minWidth: 160 }}>{translate('periods-list.clients')}</TableCell>
-                  <TableCell sx={{ minWidth: 160 }}>{translate('periods-list.stocks')}</TableCell>
+                  <TableCell sx={{ minWidth: 160 }}>{translate('periods-list.fund')}</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>
@@ -91,7 +91,7 @@ export default function BookingDetails({ periods }) {
                       </Label>
                     </TableCell>
                     <TableCell>{row?.period.clients.length}</TableCell>
-                    <TableCell>{Number(row?.period.stocks.number).toFixed(1)}</TableCell>
+                    <TableCell>{`${Number(row?.fund).toFixed(1)} SDG`}</TableCell>
 
                     {/* <TableCell>{row.status}</TableCell> */}
                     {/* <TableCell sx={{ textTransform: 'capitalize' }}>{row.roomType}</TableCell> */}

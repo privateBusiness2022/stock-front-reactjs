@@ -102,7 +102,14 @@
     "date": "تاريخ تقديم الطلب",
     "status": "الحالة",
     "stocks-number": "عدد الأسهم",
-    "stocks-price": "سعر الأسهم"
+    "stocks-price": "سعر الأسهم",
+    "Print-request-to-change": "طباعة طلب للتعديل",
+    "Print-request-to-withdrawal": "طباعة طلب للسحب",
+    "Print":"طباعة",
+    "change-from" : "تعديل من",
+    "change-to": "تعديل الى",
+    "request-from": "طلب من",
+    "note-description": "وصف الملاحظة"
   },
   "periods-list": {
     "all": "كل الدوات",
@@ -130,11 +137,14 @@
     "profit": "الربح",
     "investor": "مستثمر",
     "stage-dividing-description": "قم بالضغط على تم في حالة اكتمل التحويل, تخطي اذا حدث خطاء",
-    "print-report": "طباعة التقرير"
+    "print-report": "طباعة التقرير",
+    "fund": "قيمة التمويل",
+    "commission": "العمولة"
   },
   "investors-list": {
     "dashboard": "لوحة التحكم",
     "investors": "المستثمرين",
+    "investor": "مستثمر",
     "List": "قائمة المستثمرين",
     "new": "إنشاء مستثمر",
     "edit": "تعديل مستثمر",
@@ -151,7 +161,10 @@
     "status": "الحالة",
     "period": "الدورة",
     "stocks-Price": "سعر الاسهم",
-    "commission": "العمولة"
+    "commission": "العمولة",
+    "Total": "المجموع",
+    "Approved": "موافق عليه",
+    "Pending": "معلق"
   },
   "dividing-list": {
     "dashboard": "لوحة التحكم",
@@ -264,6 +277,7 @@
   "404001: User not found": "المستخدم غير موجود",
   "401001: Invalid credentials": "بيانات الدخول غير صحيحة",
   "409001: User with this email already exists": "المستخدم موجود بالفعل",
+  "Period Already Started": "الدورة مبدأة سابقا",
   "The profit is already approved": "الربح موافق بالفعل",
   "The number of stocks for agents is greater than the number of stocks": "عدد الاسهم للوكلاء أكبر من عدد الاسهم الكلي",
   "Not enough stocks": "لا يوجد اسهم كافية",

@@ -3,8 +3,8 @@ import { Font, StyleSheet } from '@react-pdf/renderer';
 // ----------------------------------------------------------------------
 
 Font.register({
-  family: 'Roboto',
-  fonts: [{ src: '/fonts/Roboto-Regular.ttf' }, { src: '/fonts/Roboto-Bold.ttf' }],
+  family: 'Cairo',
+  fonts: [{ src: '/fonts/Cairo.ttf' }],
 });
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     padding: '40px 24px 0 24px',
     fontSize: 9,
     lineHeight: 1.6,
-    fontFamily: 'Roboto',
+    fontFamily: 'Cairo',
     backgroundColor: '#fff',
     textTransform: 'capitalize',
   },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   tableBody: {},
   tableRow: {
     padding: '8px 0',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     borderBottomWidth: 1,
     borderStyle: 'solid',
     borderColor: '#DFE3E8',

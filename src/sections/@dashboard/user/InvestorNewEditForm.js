@@ -105,9 +105,7 @@ export default function InvestorNewEditForm({ isEdit }) {
           enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
         }
       } catch (error) {
-        if (error.statusCode === 409) {
-          enqueueSnackbar(translate(error.message), { variant: 'error' });
-        }
+        enqueueSnackbar(translate(error.message), { variant: 'error' });
         // console.error(error);
       }
     }
@@ -123,9 +121,7 @@ export default function InvestorNewEditForm({ isEdit }) {
           enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
         }
       } catch (error) {
-        if (error.statusCode === 409) {
-          enqueueSnackbar(translate(error.message), { variant: 'error' });
-        }
+        enqueueSnackbar(translate(error.message), { variant: 'error' });
         // console.error(error);
       }
     }
