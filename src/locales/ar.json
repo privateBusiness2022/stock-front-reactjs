@@ -103,13 +103,18 @@
     "status": "الحالة",
     "stocks-number": "عدد الأسهم",
     "stocks-price": "سعر الأسهم",
+    "stocks-total": "إجمالي الأسهم",
+    "stocks-description": "وصف الأسهم",
     "Print-request-to-change": "طباعة طلب للتعديل",
     "Print-request-to-withdrawal": "طباعة طلب للسحب",
     "Print":"طباعة",
     "change-from" : "تعديل من",
     "change-to": "تعديل الى",
     "request-from": "طلب من",
-    "note-description": "وصف الملاحظة"
+    "note-description": "وصف الملاحظة",
+    "message-start": "طلب سحب اسهم المستثمر",
+    "message-middle": " رقم حسابه ",
+    "message-end": " تفاصيل الاسهم ادناه"
   },
   "periods-list": {
     "all": "كل الدوات",

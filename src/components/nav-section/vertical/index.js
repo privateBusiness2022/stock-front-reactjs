@@ -5,6 +5,7 @@ import { List, Box, ListSubheader } from '@mui/material';
 //
 import { NavListRoot } from './NavList';
 import useLocales from '../../../hooks/useLocales';
+import { getRole } from '../../../utils/jwt';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,10 @@ NavSectionVertical.propTypes = {
 };
 
 export default function NavSectionVertical({ navConfig, isCollapse = false, ...other }) {
+  const role = getRole();
+  console.log(role);
   const { translate } = useLocales();
+  console.log(navConfig);
   return (
     <Box {...other}>
       {navConfig.map((group) => (
@@ -44,9 +48,9 @@ export default function NavSectionVertical({ navConfig, isCollapse = false, ...o
             {translate(`Sidebar.${group.subheader}`)}
           </ListSubheaderStyle>
 
-          {group.items.map((list) => (
-            <NavListRoot key={list.title} list={list} isCollapse={isCollapse} />
-          ))}
+          {group.items.map((list) =>
+            list?.auth?.includes(role) ? <NavListRoot key={list.title} list={list} isCollapse={isCollapse} /> : null
+          )}
         </List>
       ))}
     </Box>

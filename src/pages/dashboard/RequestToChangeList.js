@@ -114,7 +114,8 @@ export default function RequestToChangeList() {
       if (response.status === 200) {
         // await dispatch(getAll());
         enqueueSnackbar(translate('Approve-success!'), { variant: 'success' });
-        navigate(PATH_DASHBOARD.request.list);
+        // navigate(PATH_DASHBOARD.request.list);
+        window.location.reload();
       } else {
         enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
       }
@@ -140,7 +141,7 @@ export default function RequestToChangeList() {
       if (response.status === 200) {
         // await dispatch(getAll());
         enqueueSnackbar(translate('Reject-success!'), { variant: 'success' });
-        navigate(PATH_DASHBOARD.user.list);
+        window.location.reload();
       } else {
         enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
       }

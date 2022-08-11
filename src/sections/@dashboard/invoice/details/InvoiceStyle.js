@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   col6: { width: '50%' },
   mb8: { marginBottom: 8 },
   mb40: { marginBottom: 40 },
+  mx4: { margin: '0 18' },
   overline: {
     fontSize: 8,
     marginBottom: 8,

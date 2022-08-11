@@ -45,4 +45,20 @@ const setSession = (accessToken) => {
   }
 };
 
-export { isValidToken, setSession };
+// ----------------------------------------------------------------------
+
+const setRole = (role) => {
+  if (role) {
+    localStorage.setItem('role', role);
+  } else {
+    localStorage.removeItem('role');
+  }
+};
+
+// ----------------------------------------------------------------------
+
+const getRole = () => {
+  return localStorage.getItem('role');
+};
+
+export { isValidToken, setSession, setRole, getRole };

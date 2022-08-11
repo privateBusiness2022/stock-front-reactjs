@@ -4,12 +4,24 @@ import { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/ar-ly';
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
+import {
+  Avatar,
+  Checkbox,
+  TableRow,
+  TableCell,
+  Typography,
+  MenuItem,
+  Tooltip,
+  IconButton,
+  CircularProgress,
+} from '@mui/material';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import useLocales from '../../../../hooks/useLocales';
 // components
 import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
+import RTWInvoicePDF from './RTWInvoicePDF';
 
 // ----------------------------------------------------------------------
 
@@ -98,6 +110,19 @@ export default function RequestToWithdrawalTableRow({ row, selected, onApproveRo
           />
         </TableCell>
       )}
+      <PDFDownloadLink
+        document={<RTWInvoicePDF request={row} />}
+        fileName={translate('request-list.Requests-To-Withdrawal')}
+        style={{ textDecoration: 'none' }}
+      >
+        {({ loading }) => (
+          <Tooltip title="Download">
+            <IconButton>
+              {loading ? <CircularProgress size={24} color="inherit" /> : <Iconify icon={'eva:download-fill'} />}
+            </IconButton>
+          </Tooltip>
+        )}
+      </PDFDownloadLink>
     </TableRow>
   );
 }

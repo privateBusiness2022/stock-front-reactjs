@@ -30,7 +30,12 @@ const navConfig = [
   {
     subheader: 'general',
     items: [
-      { title: 'dashboard', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
+      {
+        title: 'dashboard',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard,
+        auth: ['SUDO', 'ADMIN', 'ACCOUNTER'],
+      },
       // { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
       // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       // { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
@@ -56,6 +61,7 @@ const navConfig = [
           // { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
           { title: 'account', path: PATH_DASHBOARD.user.account },
         ],
+        auth: ['SUDO', 'ADMIN'],
       },
       {
         title: 'projects',
@@ -66,6 +72,7 @@ const navConfig = [
           { title: 'projects-create', path: PATH_DASHBOARD.project.new },
           // { title: 'edit', path: PATH_DASHBOARD.project.demoEdit },
         ],
+        auth: ['SUDO', 'ADMIN', 'ACCOUNTER'],
       },
       {
         title: 'requests',
@@ -75,6 +82,7 @@ const navConfig = [
           { title: 'to-change-list', path: PATH_DASHBOARD.request.toChangeList },
           { title: 'to-withdrawal-list', path: PATH_DASHBOARD.request.toWithdrawalList },
         ],
+        auth: ['SUDO', 'ADMIN', 'ACCOUNTER'],
       },
       // PERIOD
       {
@@ -87,6 +95,7 @@ const navConfig = [
           // { title: 'periods-profile', path: PATH_DASHBOARD.period.profile },
           // { title: 'edit', path: PATH_DASHBOARD.period.demoEdit },
         ],
+        auth: ['SUDO', 'ADMIN', 'ACCOUNTER'],
       },
       // INVESTOR
       {
@@ -98,6 +107,7 @@ const navConfig = [
           { title: 'investors-create', path: PATH_DASHBOARD.investor.new },
           // { title: 'edit', path: PATH_DASHBOARD.investor.demoEdit },
         ],
+        auth: ['SUDO', 'ADMIN', 'ACCOUNTER', 'AGENT'],
       },
       // DIVIDING
       {
@@ -109,6 +119,7 @@ const navConfig = [
           { title: 'commissions-list', path: PATH_DASHBOARD.dividing.commissions },
           // { title: 'edit', path: PATH_DASHBOARD.dividing.demoEdit },
         ],
+        auth: ['SUDO', 'ADMIN', 'ACCOUNTER', 'AGENT'],
       },
       // E-COMMERCE
       // {
