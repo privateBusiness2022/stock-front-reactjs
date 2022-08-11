@@ -1,19 +1,21 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
+import { paramCase } from 'change-case';
 import moment from 'moment';
 import 'moment/locale/ar-ly'; // without this line it didn't work
-import { paramCase } from 'change-case';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
+import { CircularProgress, IconButton, MenuItem, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import useLocales from '../../../../hooks/useLocales';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
+import Label from '../../../../components/Label';
 import { TableMoreMenu } from '../../../../components/table';
+import PeriodPDF from '../request-to-change/PeriodPDF';
 
 // ----------------------------------------------------------------------
 
@@ -98,6 +100,19 @@ export default function PeriodTableRow({ row, selected, onEditRow, onSelectRow, 
           }
         />
       </TableCell>
+      <PDFDownloadLink
+        document={<PeriodPDF request={row} />}
+        fileName={translate('periods-list.List')}
+        style={{ textDecoration: 'none' }}
+      >
+        {({ loading }) => (
+          <Tooltip title="Download">
+            <IconButton>
+              {loading ? <CircularProgress size={24} color="inherit" /> : <Iconify icon={'eva:download-fill'} />}
+            </IconButton>
+          </Tooltip>
+        )}
+      </PDFDownloadLink>
     </TableRow>
   );
 }

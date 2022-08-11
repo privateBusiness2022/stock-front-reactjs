@@ -3,16 +3,13 @@ import { useState } from 'react';
 // @mui
 import moment from 'moment';
 import 'moment/locale/ar-ly'; // without this line it didn't work
-import { paramCase } from 'change-case';
-import { Navigate } from 'react-router';
 
+import { MenuItem, TableCell, TableRow, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
-import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useLocales from '../../../../hooks/useLocales';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
+import Label from '../../../../components/Label';
 import { TableMoreMenu } from '../../../../components/table';
 
 // ----------------------------------------------------------------------
