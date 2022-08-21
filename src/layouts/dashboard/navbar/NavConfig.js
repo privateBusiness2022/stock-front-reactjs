@@ -70,7 +70,7 @@ const navConfig = [
         children: [
           { title: 'projects-list', path: PATH_DASHBOARD.project.list },
           { title: 'projects-create', path: PATH_DASHBOARD.project.new },
-          // { title: 'edit', path: PATH_DASHBOARD.project.demoEdit },
+          // { title: 'projects-Edit', path: PATH_DASHBOARD.project.edit },
         ],
         auth: ['SUDO', 'ADMIN', 'ACCOUNTER'],
       },

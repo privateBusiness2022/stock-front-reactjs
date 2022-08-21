@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 // @mui
+import { Box, List, ListSubheader } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { List, Box, ListSubheader } from '@mui/material';
 //
-import { NavListRoot } from './NavList';
 import useLocales from '../../../hooks/useLocales';
 import { getRole } from '../../../utils/jwt';
+import { NavListRoot } from './NavList';
 
 // ----------------------------------------------------------------------
 
@@ -31,9 +31,7 @@ NavSectionVertical.propTypes = {
 
 export default function NavSectionVertical({ navConfig, isCollapse = false, ...other }) {
   const role = getRole();
-  console.log(role);
   const { translate } = useLocales();
-  console.log(navConfig);
   return (
     <Box {...other}>
       {navConfig.map((group) => (

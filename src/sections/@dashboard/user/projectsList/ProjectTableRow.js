@@ -6,7 +6,10 @@ import 'moment/locale/ar-ly'; // without this line it didn't work
 
 import { MenuItem, TableCell, TableRow, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { paramCase } from 'change-case';
+import { useNavigate } from 'react-router';
 import useLocales from '../../../../hooks/useLocales';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
 import Iconify from '../../../../components/Iconify';
 import Label from '../../../../components/Label';
@@ -35,6 +38,8 @@ export default function ProjectTableRow({
   const { translate } = useLocales();
   moment.locale('ar-ly');
 
+  const navigate = useNavigate();
+
   const { name, status, projectFund, date } = row;
   const id = window.localStorage.getItem('id');
   const [openMenu, setOpenMenuActions] = useState(null);
@@ -48,7 +53,7 @@ export default function ProjectTableRow({
   };
 
   return (
-    <TableRow hover selected={selected} onClick={onClickRow}>
+    <TableRow hover selected={selected}>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="subtitle2" noWrap>
           {name}
@@ -86,6 +91,24 @@ export default function ProjectTableRow({
               >
                 <Iconify icon={'eva:trash-2-outline'} />
                 {translate('Delete')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(PATH_DASHBOARD.project.edit(paramCase(`${row.id}`)));
+                }}
+                sx={{ color: 'warning.main' }}
+              >
+                <Iconify icon={'eva:edit-outline'} />
+                {translate('Edit')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(PATH_DASHBOARD.project.profile(paramCase(`${row.id}`)));
+                }}
+                sx={{ color: 'purple.main' }}
+              >
+                <Iconify icon={'eva:briefcase-outline'} />
+                {translate('project-Profile')}
               </MenuItem>
             </>
           }

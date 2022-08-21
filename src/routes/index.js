@@ -1,13 +1,11 @@
-import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { Navigate, useLocation, useRoutes } from 'react-router-dom';
 // layouts
-import moment from 'moment';
-import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
-import GuestGuard from '../guards/GuestGuard';
 import AuthGuard from '../guards/AuthGuard';
+import GuestGuard from '../guards/GuestGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // config
 import { PATH_AFTER_LOGIN } from '../config';
@@ -101,6 +99,7 @@ export default function Router() {
             { element: <Navigate to="/dashboard/project/list" replace />, index: true },
             { path: 'list', element: <ProjectList /> },
             { path: 'new', element: <ProjectCreate /> },
+            { path: 'edit', element: <ProjectCreate /> },
             { path: 'profile', element: <ProjectProfile /> },
           ],
         },

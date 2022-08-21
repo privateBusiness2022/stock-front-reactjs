@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
+import { Avatar, MenuItem, TableCell, TableRow, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Checkbox, TableRow, TableCell, Typography, MenuItem } from '@mui/material';
 import useLocales from '../../../../hooks/useLocales';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
+import Label from '../../../../components/Label';
 import { TableMoreMenu } from '../../../../components/table';
 
 // ----------------------------------------------------------------------
@@ -86,7 +86,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
                   handleCloseMenu();
                 }}
               >
-                <Iconify icon={'eva:edit-fill'} />
+                <Iconify icon={'eva:edit-outline'} />
                 {translate('Edit')}
               </MenuItem>
               {status === 'INACTIVE' ? (

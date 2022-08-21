@@ -1,23 +1,22 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 // form
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack } from '@mui/material';
-import moment from 'moment';
 // utils
-import axios from '../../../utils/axios';
-import { useDispatch, useSelector } from '../../../redux/store';
 import { getAll } from '../../../redux/slices/periods';
+import { useDispatch, useSelector } from '../../../redux/store';
+import axios from '../../../utils/axios';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
-import { FormProvider, RHFSelect, RHFTextField, RHFDatePiker } from '../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../components/hook-form';
 import useLocales from '../../../hooks/useLocales';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -38,9 +37,11 @@ export default function ProjectNewEditForm({ isEdit }) {
 
   const { periods } = useSelector((state) => state.periods);
 
+  const { projects } = useSelector((state) => state.projects);
+
   const periodsFund = [];
 
-  const currentPeriod = periods.find((period) => periods.id === id);
+  const currentProject = projects.find((project) => project.id === id);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -75,9 +76,9 @@ export default function ProjectNewEditForm({ isEdit }) {
 
   const defaultValues = useMemo(
     () => ({
-      name: currentPeriod?.name || '',
+      name: currentProject?.name || '',
     }),
-    [currentPeriod]
+    [currentProject]
   );
 
   const methods = useForm({
@@ -92,13 +93,13 @@ export default function ProjectNewEditForm({ isEdit }) {
   } = methods;
 
   const onSubmit = async (data) => {
-    if (isEdit && currentPeriod) {
+    if (isEdit && currentProject) {
       try {
-        const response = await axios.patch(`/periods/${id}`, data);
+        const response = await axios.patch(`/projects/${id}`, data);
         if (response.status === 200) {
           enqueueSnackbar(!isEdit ? translate('Create-success!') : translate('Update-success!'));
           reset();
-          navigate(PATH_DASHBOARD.period.list);
+          navigate(PATH_DASHBOARD.project.list);
         } else {
           enqueueSnackbar(translate('Error-occurred'), { variant: 'error' });
         }
@@ -171,14 +172,16 @@ export default function ProjectNewEditForm({ isEdit }) {
             >
               <RHFTextField name="name" label={translate('Full-Name')} />
               {/* <RHFDatePiker name="end" label={translate('End-date')} /> */}
-              {periods?.map((period) => (
-                <RHFTextField
-                  key={period.id}
-                  name={`periodFund${period.id}`}
-                  type="number"
-                  label={`${translate('Period-Fund')}  ${period.name}`}
-                />
-              ))}
+              {isEdit
+                ? null
+                : periods?.map((period) => (
+                    <RHFTextField
+                      key={period.id}
+                      name={`periodFund${period.id}`}
+                      type="number"
+                      label={`${translate('Period-Fund')}  ${period.name}`}
+                    />
+                  ))}
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
