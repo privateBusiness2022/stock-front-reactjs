@@ -1,27 +1,24 @@
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 // form
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack } from '@mui/material';
-import moment from 'moment';
 // utils
-import axios from '../../../utils/axios';
-import { useDispatch, useSelector } from '../../../redux/store';
 import { getAll } from '../../../redux/slices/investor';
-import { getAll as getUsers } from '../../../redux/slices/users';
 import { getAll as getPeriods } from '../../../redux/slices/periods';
+import { getAll as getUsers } from '../../../redux/slices/users';
+import { useDispatch, useSelector } from '../../../redux/store';
+import axios from '../../../utils/axios';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
-import { FormProvider, RHFSelect, RHFTextField, RHFDatePiker } from '../../../components/hook-form';
+import { FormProvider, RHFSelect, RHFTextField } from '../../../components/hook-form';
 import useLocales from '../../../hooks/useLocales';
-import { BookingWidgetSummary } from '../general/booking';
-import { DocIllustration } from '../../../assets';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -127,9 +124,11 @@ export default function InvestorNewEditForm({ isEdit }) {
     }
   };
 
-  const onStockWithdrawal = async () => {
+  const onStockWithdrawal = async (data) => {
     try {
-      const response = await axios.post(`/clients/stocks-withdrawal/${currentInvestor.id}`);
+      const response = await axios.post(`/clients/stocks-withdrawal/${currentInvestor.id}`, {
+        price: data.stocksPrice,
+      });
       if (response.status === 201) {
         dispatch(getAll());
         enqueueSnackbar(translate('Stock-withdrawal-request-success!'));
@@ -152,57 +151,10 @@ export default function InvestorNewEditForm({ isEdit }) {
   }, [dispatch]);
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+    <>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Card sx={{ p: 3 }}>
-            <Box
-              sx={{
-                display: 'grid',
-                columnGap: 2,
-                rowGap: 3,
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-              }}
-            >
-              <RHFTextField name="name" label={translate('Full-Name')} />
-              <RHFTextField name="phone" label={translate('Phone-Number')} />
-              <RHFTextField name="account" label={translate('Account-Number')} />
-              {!isEdit ? <RHFTextField name="stocksPrice" type="number" label={translate('Stocks-Price')} /> : null}
-              {!isEdit ? (
-                <RHFSelect name="period" defaultValue="1" label={translate('Period')}>
-                  <option selected value="1">
-                    {translate('Select-Period')}
-                  </option>
-                  {periods.map((period) => (
-                    <option key={period.id} value={period.id}>
-                      {period.name}
-                    </option>
-                  ))}
-                </RHFSelect>
-              ) : null}
-              {!isEdit ? (
-                <RHFSelect name="reference" defaultValue="1" label={translate('Reference')}>
-                  <option selected value="1">
-                    {translate('Select-Reference')}
-                  </option>
-                  {users.map((user) => (
-                    <option key={user.id} value={user.id}>
-                      {user.name}
-                    </option>
-                  ))}
-                </RHFSelect>
-              ) : null}
-            </Box>
-
-            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? translate('Create-Investor') : translate('Save-Changes')}
-              </LoadingButton>
-            </Stack>
-          </Card>
-        </Grid>
-        {isEdit ? (
-          <Grid item xs={12} md={4}>
+          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <Card sx={{ p: 3 }}>
               <Box
                 sx={{
@@ -212,25 +164,70 @@ export default function InvestorNewEditForm({ isEdit }) {
                   gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
                 }}
               >
-                <RHFTextField disabled name="period" label={translate('Period')} />
-                <RHFTextField disabled name="stocksPrice" type="number" label={translate('Stocks-Price')} />
-                <RHFTextField disabled name="reference" label={translate('Reference')} />
+                <RHFTextField name="name" label={translate('Full-Name')} />
+                <RHFTextField name="phone" label={translate('Phone-Number')} />
+                <RHFTextField name="account" label={translate('Account-Number')} />
+                {!isEdit ? <RHFTextField name="stocksPrice" type="number" label={translate('Stocks-Price')} /> : null}
+                {!isEdit ? (
+                  <RHFSelect name="period" defaultValue="1" label={translate('Period')}>
+                    <option selected value="1">
+                      {translate('Select-Period')}
+                    </option>
+                    {periods.map((period) => (
+                      <option key={period.id} value={period.id}>
+                        {period.name}
+                      </option>
+                    ))}
+                  </RHFSelect>
+                ) : null}
+                {!isEdit ? (
+                  <RHFSelect name="reference" defaultValue="1" label={translate('Reference')}>
+                    <option selected value="1">
+                      {translate('Select-Reference')}
+                    </option>
+                    {users.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </RHFSelect>
+                ) : null}
               </Box>
+
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-                <LoadingButton
-                  type="button"
-                  variant="contained"
-                  color="error"
-                  loading={isSubmitting}
-                  onClick={onStockWithdrawal}
-                >
-                  {translate('Stock-withdrawal')}
+                <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+                  {!isEdit ? translate('Create-Investor') : translate('Save-Changes')}
                 </LoadingButton>
               </Stack>
             </Card>
+          </FormProvider>
+        </Grid>
+        {isEdit ? (
+          <Grid item xs={12} md={4}>
+            <FormProvider methods={methods} onSubmit={handleSubmit(onStockWithdrawal)}>
+              <Card sx={{ p: 3 }}>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    columnGap: 2,
+                    rowGap: 3,
+                    gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                  }}
+                >
+                  <RHFTextField disabled name="period" label={translate('Period')} />
+                  <RHFTextField name="stocksPrice" type="number" label={translate('Stocks-Price')} />
+                  <RHFTextField disabled name="reference" label={translate('Reference')} />
+                </Box>
+                <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+                  <LoadingButton type="submit" variant="contained" color="error" loading={isSubmitting}>
+                    {translate('Stock-withdrawal')}
+                  </LoadingButton>
+                </Stack>
+              </Card>
+            </FormProvider>
           </Grid>
         ) : null}
       </Grid>
-    </FormProvider>
+    </>
   );
 }

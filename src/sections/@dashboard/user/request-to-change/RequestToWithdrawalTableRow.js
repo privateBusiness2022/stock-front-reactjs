@@ -1,25 +1,15 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
+import { CircularProgress, IconButton, MenuItem, TableCell, TableRow, Tooltip } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import moment from 'moment';
 import 'moment/locale/ar-ly';
-import { useTheme } from '@mui/material/styles';
-import {
-  Avatar,
-  Checkbox,
-  TableRow,
-  TableCell,
-  Typography,
-  MenuItem,
-  Tooltip,
-  IconButton,
-  CircularProgress,
-} from '@mui/material';
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import useLocales from '../../../../hooks/useLocales';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
+import Label from '../../../../components/Label';
 import { TableMoreMenu } from '../../../../components/table';
 import RTWInvoicePDF from './RTWInvoicePDF';
 
@@ -38,7 +28,7 @@ export default function RequestToWithdrawalTableRow({ row, selected, onApproveRo
 
   const { translate } = useLocales();
 
-  const { client, date, withdrawDate, status } = row;
+  const { client, date, price, withdrawDate, status } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -74,8 +64,8 @@ export default function RequestToWithdrawalTableRow({ row, selected, onApproveRo
         </Label>
       </TableCell>
 
-      <TableCell align="left">{client?.stocks[0]?.number}</TableCell>
-      <TableCell align="left">{`SDG ${client?.stocks[0]?.price}`}</TableCell>
+      <TableCell align="left">{Number(price) / Number(client?.stocks[0]?.stock?.priceOfOne)}</TableCell>
+      <TableCell align="left">{`SDG ${price}`}</TableCell>
 
       {status === 'PENDING' && (
         <TableCell align="right">
